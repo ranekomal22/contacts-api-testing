@@ -1,0 +1,19 @@
+{
+  "name": "contacts-api-tests",
+  "version": "0.0.1",
+  "description": "API Tests using Mocha, SuperTest and Chai",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/ranekomal/contacts-api-tests"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha test/**/*Test.js --reporter spec"
+  },
+  "dependencies": {
+    "chai": "^4.3.4",
+    "mocha": "^9.0.2",
+    "randomstring": "^1.2.1",
+    "supertest": "^6.1.3"
+  }
+}
