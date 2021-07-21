@@ -1,7 +1,12 @@
 API Test Automation - Mocha, SuperTest, Chai
 =================
 
-This is an API Automation Tests project 
+This is an API Automation Tests project   
+
+APIs Under Test
+---------------
+Swagger Docs: https://contacts-api.herokuapp.com/api/v1/contacts/swagger-ui/index.html
+
 
 Requirements
 ---------------
