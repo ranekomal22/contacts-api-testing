@@ -7,10 +7,10 @@ const randomstring = require("randomstring");
 describe("PUT /contacts", function () {
 
     let reqBody;
- 
+
     let sameMoobileNumber;
 
-    before(async function() {
+    before(async function () {
         // runs once before the first test in this block
         // Get latest epoch (i.e current time in Milliseconds)
         const randomNumber = Date.now();
@@ -19,16 +19,16 @@ describe("PUT /contacts", function () {
         reqBody = postBody.getBody(randomNumber);
 
         // Make post API call for creating contact
-       const createResponse = await apiCall.postContact(reqBody);
+        const createResponse = await apiCall.postContact(reqBody);
 
         expect(createResponse.status).to.eql(201);
         reqBody.id = createResponse.body.id;
     });
-    
-    after(async function() {
+
+    after(async function () {
         // runs once after the last test in this block
         // Delete created contact
-        const deleteResponse = await apiCall.deleteContact(reqBody.id );
+        const deleteResponse = await apiCall.deleteContact(reqBody.id);
         expect(deleteResponse.status).to.eql(204);
     });
 
@@ -47,7 +47,7 @@ describe("PUT /contacts", function () {
 
         const createResponse = await apiCall.putContact(reqBody);
         //console.log(createResponse.body);
-        
+
         // verify updated resposne
         expect(createResponse.status).to.eql(200);
         expect(createResponse.body.id).to.eql(reqBody.id);
@@ -62,7 +62,7 @@ describe("PUT /contacts", function () {
         expect(createResponse.body.state).to.eql(reqBody.state);
         expect(createResponse.body.zipcode).to.eql(reqBody.zipcode);
         expect(createResponse.body.street).to.eql(reqBody.street);
-        
+
     });
 
     it("Update phones array successfully, response 200", async function () {
@@ -70,10 +70,10 @@ describe("PUT /contacts", function () {
         sameMoobileNumber = Date.now();
 
         // Update phones array in contact
-        reqBody.phones.push({type: "Home", number: sameMoobileNumber,countryCode: 3}) ;
+        reqBody.phones.push({ type: "Home", number: sameMoobileNumber, countryCode: 3 });
 
         // Make put call for updating contact
-        const createResponse = await apiCall.putContact(reqBody); 
+        const createResponse = await apiCall.putContact(reqBody);
 
         // verify phone array updated successfully
         expect(createResponse.status).to.eql(200);
@@ -82,40 +82,40 @@ describe("PUT /contacts", function () {
         expect(createResponse.body.phones[1].countryCode).to.eql(reqBody.phones[1].countryCode);
     });
 
-// Negative Scenario
-    
+    // Negative Scenario
+
     it("Update same phones Number in body , response 412", async function () {
 
-        reqBody.phones.push({type: "Home", number: sameMoobileNumber, countryCode: 3}) ;
+        reqBody.phones.push({ type: "Home", number: sameMoobileNumber, countryCode: 3 });
 
         // Make put call for updating contact
         const createResponse = await apiCall.putContact(reqBody);
 
         //Verify status code 412
-        expect(createResponse.status).to.eql(412);  
-        
+        expect(createResponse.status).to.eql(412);
+
     });
 
     it("Enter invalid id , response 404", async function () {
-        
-        const idNumber = 999;
-       // console.log(createResponse.body.id);
 
-        if (reqBody.id == idNumber){
+        const idNumber = 999;
+        // console.log(createResponse.body.id);
+
+        if (reqBody.id == idNumber) {
             idNumber++;
         }
 
         // to delete test data, need to store reqBody.id
         const tempid = reqBody.id;
 
-        reqBody.id = idNumber ;
-        
+        reqBody.id = idNumber;
+
         // Make put call for updating contact
-        createResponse = await apiCall.putContact(reqBody); 
-        
+        createResponse = await apiCall.putContact(reqBody);
+
         //Verify status code 404
         expect(createResponse.status).to.eql(404);
-        
+
         //delete data testdata using reqBody.id 
         reqBody.id = tempid;
     });
